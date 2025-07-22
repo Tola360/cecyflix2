@@ -1,22 +1,30 @@
 const express = require('express');
-const axios = require('axios'); 
-const cors = require('cors'); 
+const axios = require('axios');
+const cors = require('cors');
 const mongoose = require('mongoose');
-require('dotenv').config(); 
+require('dotenv').config();
+
 console.log('API KEY:', process.env.OPENROUTER_API_KEY);
 
-const app = express(); 
-app.use(cors()); 
+const app = express();
+app.use(cors());
 app.use(express.json());
 
 const peliculasRouter = require('./routers/peliculas');
 app.use('/api/peliculas', peliculasRouter);
 
+// Ruta raíz para verificar que funciona:
+app.get('/', (req, res) => {
+    res.send('Backend Cecyflix funcionando correctamente 🚀');
+});
+
+// Conexión a MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB conectado'))
     .catch(err => console.error(err));
 
-const PORT = 4000; 
+// 🔴 CORRIGE AQUÍ: Puerto dinámico para Render
+const PORT = process.env.PORT || 4000;
 
 app.post('/api/recomendaciones', async (req, res) => {
     const { prompt } = req.body;
