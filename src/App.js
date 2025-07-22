@@ -38,6 +38,7 @@ function App() {
         setRecomendacion('Pensando...');
         try {
          //   const res = await fetch('https://recomendaciones-backend.onrender.com/api/recomendaciones', {
+            const res = await fetch('https://cecyflix2.onrender.com/api/recomendaciones', {
             import React, { useEffect, useState } from 'react';
 import './App.css';
 
