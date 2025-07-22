@@ -23,8 +23,13 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB conectado'))
     .catch(err => console.error(err));
 
-// 🔴 CORRIGE AQUÍ: Puerto dinámico para Render
-const PORT = process.env.PORT || 4000;
+// Puerto dinámico para Render - obligatorio usar process.env.PORT
+const PORT = process.env.PORT;
+
+if (!PORT) {
+  console.error("Error: no se definió el puerto en env.PORT");
+  process.exit(1);
+}
 
 app.post('/api/recomendaciones', async (req, res) => {
     const { prompt } = req.body;
@@ -52,5 +57,6 @@ app.post('/api/recomendaciones', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en puerto ${PORT}`);
 });
+
